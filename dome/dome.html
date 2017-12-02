@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <h3>Canvas制作音乐播放器</h3>
+
+    <canvas id="c2"></canvas>
+
+    <script>
+        var progress = 0;//所有图片的总加载进度
+
+        var imgBg = new Image();
+        imgBg.src = 'image/bg.jpg';
+        imgBg.onload = function(){
+            console.log('1 背景图片加载完成');
+            progress += 20;//按文件大小所占比例加权重
+            if(progress===100){
+                stratDraw();
+            }
+        }
+
+        var imgDisc = new Image();
+        imgDisc.src = 'image/disc.png';
+        imgDisc.onload = function(){
+            console.log('2 封面图片加载完成');
+            progress += 40;//按文件大小所占比例加权重
+            if(progress===100){
+                stratDraw();
+            }
+        }
+
+        var imgPlay = new Image();
+        imgPlay.src = 'image/play.png';
+        imgPlay.onload = function(){
+            console.log('3 播放图片加载完成');
+            progress += 20;//按文件大小所占比例加权重
+            if(progress===100){
+                stratDraw();
+            }
+        }
+
+        var imgPause = new Image();
+        imgPause.src = 'image/pause.png';
+        imgPause.onload = function(){
+            console.log('4 暂停图片加载完成');
+            progress += 20;//按文件大小所占比例加权重
+            if(progress===100){
+                stratDraw();
+            }
+        }
+
+        function stratDraw(){
+            console.log('开始绘图……');
+            var w = imgBg.width;
+            var h = imgBg.height;
+            //让画布的宽高与背景图一样
+            c2.width = w;
+            c2.height = h;
+            var ctx = c2.getContext('2d');
+
+            //1 绘制背景图
+             ctx.drawImage(imgBg, 0, 0);
+            //2 绘制黑色的胶片
+             ctx.beginPath();
+             ctx.arc(w/2,h/2,120,0,2*Math.PI);//r,起始角0，终止角2*Math.PI
+             ctx.fill();
+            //3 绘制胶片封面
+             var left = 120*Math.sin(Math.PI/4);
+             ctx.drawImage(imgDisc,w/2-left,h/2-left,2*left,2*left);
+            //4 绘制播放和暂停按钮
+             ctx.drawImage(imgPlay, w/2-40, h-80,80,80);
+
+            c2.onclick = function(e){
+                var ex = e.offsetX;
+                var ey = e.offsetY;
+                var rx = w/2;   //圆形按钮圆形坐标
+                var ry = h-40;
+                var r = 40;     //圆形按钮的半径
+                //计算两个点间距，是否小于圆形半径
+                if((Math.sqrt((ex-rx)*(ex-rx)+(ey-ry)*(ey-ry)))<r){
+                    alert("按钮被点击了……")
+                }
+              }
+         }
+
+    </script>
+</body>
+</html>
