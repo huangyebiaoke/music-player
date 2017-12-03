@@ -159,25 +159,53 @@
             <img class="btn-right" src="images/after-music.png">
             <div class="progress"></div>
         </section>
-        <audio id="music-audio" src="http://m10.music.126.net/20171202233929/ba0a9e68790d338348badbbbc346330a/ymusic/59e5/dd23/1132/8054192dd27bfb8e966cc5bab222f3a3.mp3"></audio>
+        <audio id="music-audio" preload="metadata" src="http://madeai.cn/wp-content/uploads/2017/12/Adele-Rolling-In-The-Deep.mp3"></audio>
     </main>
     <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript">
         $(".btn-medium").click(function () {
             $("#music-audio").get(0).play();
             // $(".btn-medium").addClass("btn-size");
             $(".music-wrap").addClass("rotate");
             // $("#music-needle").addClass("music-needle-rotate");
-            $(this).css("display","none");
-            $(".btn-medium-another").css("display","block");
+            $(this).hide();//css("display","none");
+            $(".btn-medium-another").show();//css("display","block");
         })
         $(".btn-medium-another").click(function () {
             $("#music-audio").get(0).pause();
             $(".music-wrap").removeClass("rotate");
-            $(this).css("display","none");
-            $(".btn-medium").css("display","block");
+            $(this).hide();//css("display","none");
+            $(".btn-medium").show();//css("display","block");
         })
-
+        var i=0;
+        $(".btn-right").click(function () {
+            // $("#music-audio").src='http://madeai.cn/wp-content/uploads/2017/12/'+music[i]+'.mp3';
+            i++;
+             $("#music-audio").attr("src","http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3")
+            $("#music-audio").get(0).play();
+            $(".music-wrap").addClass("rotate");
+            // $("#music-needle").addClass("music-needle-rotate");
+            $(".btn-medium").hide();//css("display","none");
+            $(".btn-medium-another").show();
+            if(!i<9){
+                alert("只有9首歌曲，抱歉");
+            }
+            // console.log("http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3");
+        })
+        $(".btn-left").click(function () {
+            // $("#music-audio").src='http://madeai.cn/wp-content/uploads/2017/12/'+music[i]+'.mp3';
+            if(!i>=0){
+                alert(music[i]);
+            }
+            i--;
+            $("#music-audio").attr("src","http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3")
+            $("#music-audio").get(0).play();
+            $(".music-wrap").removeClass("rotate");
+            $(".btn-medium-another").hide();//css("display","none");
+            $(".btn-medium").show();//css("display","block");
+            // console.log("http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3");
+        })
     </script>
 </body>
 </html>
