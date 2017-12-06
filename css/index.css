@@ -1,0 +1,150 @@
+body,h1,h2,h3,h4,h5,h6,div,span,header,footer,main{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: url("../images/player-disk-cover.png") no-repeat fixed center center;
+    background-size: cover;
+    overflow: hidden;
+}
+#cover-bg{
+    background: url("../images/player-disk-cover.png") no-repeat fixed center center;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    filter:blur(5px);
+}
+#music-warp {
+    background: url("../images/player-disk.png") no-repeat;
+    background-size: cover;
+    width: 400px;
+    height: 400px;
+    margin: 50px auto;
+    position: relative;
+
+}
+#player-needle-out{
+    position: relative;
+    width: 100px;
+    margin: 0 auto;
+    left: 30px;
+
+}
+#player-needle{
+    position: absolute;
+    top: -70px;
+    z-index: 2;
+    width: 100px;
+    transform-origin: 15px 15px;
+    transform: rotate(-35deg);
+
+}
+#player-needle{
+    animation: 1s ease normal 1;
+    animation-fill-mode : forwards;
+}
+@keyframes music-needle-rot {
+    from{
+        transform: rotate(-35deg);
+    }
+    to{
+        transform: rotate(0deg);
+    }
+}
+@keyframes music-needle-rot-another {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(-35deg);
+    }
+}
+#cover {
+    width: 260px;
+    z-index: 1;
+    border-radius: 50%;
+    position: absolute;
+    top: 70px;
+    left: 70px;
+}
+#music-warp {
+    animation: rot 10s linear infinite;
+    animation-fill-mode : forwards;
+    animation-play-state : paused;
+}
+@keyframes rot {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+#control-bar{
+    z-index: 2;
+    width: 100%;
+    height: 60px;
+    background: white;
+    position: absolute;
+    bottom: 0;
+}
+#btn-left,#btn-medium,#btn-right,#btn-medium-another{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+#btn-medium-another{
+    display: none;
+}
+#progress{
+    width: 100%;
+    height: 2px;
+    background-color: aqua;
+}
+#point{
+    width: 6px;
+    height: 6px;
+    transform: translateY(-3px);
+    border-radius: 50%;
+    background-color: olivedrab;
+}
+#point-left{
+    height: 2px;
+    width: 0;
+    background-color: black;
+}
+#music-information{
+    z-index: 2;
+    width: 150px;
+    height: 30px;
+    position: relative;
+    left: 10px;
+    top: 15px;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+#music-name{
+    height: 30px;
+    position: relative;
+    z-index: 1;
+    white-space : nowrap;
+    animation: scro 4s linear infinite;
+}
+@keyframes scro {
+    from{
+        transform: translateX(-150px);
+    }
+    to{
+        transform: translateX(150px);
+    }
+}
+

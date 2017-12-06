@@ -2,210 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=11.0,user-scalable=0,minimum=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,minimum=1.0">
     <title>仿网易云音乐</title>
-    <link rel="icon" href="images/FileAssociationsLogo.png">
-    <style type="text/css">
-        body, main::before {
-            background: url("images/cd.png") 0 / cover fixed;
-            /*background: url("images/cd.png") no-repeat center center;
-            background-size: cover;*/
-        }
-        body{
-            margin: 0;
-        }
-
-        main {
-            /*position: relative;*/
-            background: hsla(0, 0%, 100%, .3);
-            overflow: hidden;
-        }
-
-        main::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            filter: blur(20px);
-            /*margin: -30px;*/
-        }
-
-        /*body{
-            margin: 0;
-            background: url("images/cd.png") no-repeat center center;
-            background-size: cover;
-            filter: blur(5px);
-        }*/
-        /*body::before {
-            filter: blur(100px);
-        }*/
-        .music-wrap {
-            /*opacity:0.5;*/
-            background: url("images/player_disk_cover.scale-200.png") no-repeat;
-            /*position: absolute; left:50%; top:50%; -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%);*/
-            background-size: cover;
-            width: 300px;
-            height: 300px;
-            margin: 50px auto;
-            position: relative;
-
-        }
-        .music-needle-out{
-            position: relative;
-            width: 89.03px;
-            /*height: 137.41px;*/
-            /*background-color: red;*/
-            margin: auto;
-
-         }
-        .music-needle-out #music-needle{
-            /*display: block;*/
-            position: absolute;
-            z-index: 2;
-            width: 89.03px;
-            transform-origin: -15px -15px;
-            transform: translateX(40%) rotate(-35deg);
-            /*height: 137.41px;*/
-        }
-        /*.music-needle-rotate{
-             animation:music-needle-rot 1s linear infinite;
-             transform: rotate(0deg);
-         }
-        @keyframes music-needle-rot {
-            from{
-                transform: rotate(-35deg);
-            }
-            to{
-                transform: rotate(0deg);
-            }
-
-        }*/
-
-        #music-cd {
-            z-index: 1;
-            border-radius: 50%;
-            position: absolute;
-            top: 50px;
-            left: 50px;
-        }
-        .rotate {
-            animation: rot 10s linear infinite;
-        }
-        @keyframes rot {
-            from{
-                transform: rotate(0deg);
-            }
-            to{
-                transform: rotate(360deg);
-            }
-        }
-        /*.btn-size{
-            animation: btn-siz 1s linear infinite;
-
-        }
-        @keyframes btn-siz {
-            from{
-                scale(1,1);
-            }
-            to{
-                scale(0.7,0.7);
-            }
-
-        }*/
-        #control-bar{
-            width: 100%;
-            height: 50px;
-            background: red;
-            position: absolute;
-            bottom: 0;
-        }
-        #control-bar{
-            /*padding: 50px auto;*/
-            overflow: hidden;
-        }
-        .btn-left,.btn-medium,.btn-right,.btn-medium-another{
-            /*display: block;*/
-            width: 30px;
-            height: 30px;
-            float: left;
-            margin-top: 10px;
-            margin-left: 10px;
-            border-radius: 50%;
-        }
-        .btn-medium-another{
-            display: none;
-        }
-    </style>
+    <link rel="icon" href="images/favicon.png">
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+    <header>
+        <div id="player-needle-out"><img id="player-needle" src="images/player-needle.png"></div>
+    </header>
     <main>
-        <header>
-        </header>
-        <div class="music-needle-out">
-            <img id="music-needle" src="images/player_needle.scale-200.png">
-        </div>
-
-        <section>
-            <div class="music-wrap">
-                <img id="music-cd" src="images/cd.png">
+        <section class="music-warp" id="music-warp">
+            <div class="disk" id="disk">
+                <img class="cover" id="cover" src="images/player-disk-cover.png" onerror="$(this).attr('src','images/player-disk-cover.png');">
             </div>
         </section>
-        <section id="control-bar">
-            <img class="btn-left" src="images/before-music.png">
-            <img class="btn-medium" src="images/pause-music.png">
-            <img class="btn-medium-another" src="images/play-music.png">
-            <img class="btn-right" src="images/after-music.png">
-            <div class="progress"></div>
-        </section>
-        <audio id="music-audio" preload="metadata" src="http://madeai.cn/wp-content/uploads/2017/12/Adele-Rolling-In-The-Deep.mp3"></audio>
     </main>
+    <footer class="control-bar" id="control-bar">
+        <div id="progress">
+            <div id="point-left">
+            </div>
+            <div id="point">
+            </div>
+        </div>
+        <img id="btn-left" src="images/previous-music.png">
+        <img id="btn-medium" src="images/play-music.png">
+        <img id="btn-medium-another" src="images/pause-music.png">
+        <img id="btn-right" src="images/next-music.png">
+        <div id="music-information">
+            <div id="music-name"></div>
+        </div>
+    </footer>
+    <div class="cover-bg" id="cover-bg"></div>
+    <audio id="music-audio" preload="metadata" src="http://madeai.cn/wp-content/uploads/2017/12/Adele-Rolling-In-The-Deep.mp3"></audio>
     <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
-    <script type="text/javascript">
-        $(".btn-medium").click(function () {
-            $("#music-audio").get(0).play();
-            // $(".btn-medium").addClass("btn-size");
-            $(".music-wrap").addClass("rotate");
-            // $("#music-needle").addClass("music-needle-rotate");
-            $(this).hide();//css("display","none");
-            $(".btn-medium-another").show();//css("display","block");
-        })
-        $(".btn-medium-another").click(function () {
-            $("#music-audio").get(0).pause();
-            $(".music-wrap").removeClass("rotate");
-            $(this).hide();//css("display","none");
-            $(".btn-medium").show();//css("display","block");
-        })
-        var i=0;
-        $(".btn-right").click(function () {
-            // $("#music-audio").src='http://madeai.cn/wp-content/uploads/2017/12/'+music[i]+'.mp3';
-            i++;
-             $("#music-audio").attr("src","http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3")
-            $("#music-audio").get(0).play();
-            $(".music-wrap").addClass("rotate");
-            // $("#music-needle").addClass("music-needle-rotate");
-            $(".btn-medium").hide();//css("display","none");
-            $(".btn-medium-another").show();
-            if(!i<9){
-                alert("只有9首歌曲，抱歉");
-            }
-            // console.log("http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3");
-        })
-        $(".btn-left").click(function () {
-            // $("#music-audio").src='http://madeai.cn/wp-content/uploads/2017/12/'+music[i]+'.mp3';
-            if(!i>=0){
-                alert(music[i]);
-            }
-            i--;
-            $("#music-audio").attr("src","http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3")
-            $("#music-audio").get(0).play();
-            $(".music-wrap").removeClass("rotate");
-            $(".btn-medium-another").hide();//css("display","none");
-            $(".btn-medium").show();//css("display","block");
-            // console.log("http://madeai.cn/wp-content/uploads/2017/12/"+music[i]+".mp3");
-        })
-    </script>
+    <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
