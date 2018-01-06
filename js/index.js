@@ -1,8 +1,7 @@
 if(navigator.userAgent.toLowerCase().match(/android/i) == "android"||navigator.userAgent.toLowerCase().match(/MicroMessenger/i)=="micromessenger"){
     $("#music-warp").css({"width":"300px","height":"300px"});
     $("#cover").css({"width":"200px","height":"200px","top":"50px","left":"50px"});
-}
-else if(navigator.userAgent.toLowerCase().match(/iphone os/i) == "iphone os"){
+}else if(navigator.userAgent.toLowerCase().match(/iphone os/i) == "iphone os"){
     alert("不对iphone做适配，抱歉！");
 }
 function audioPuase() {
@@ -22,7 +21,7 @@ function audioPlay() {
 }
 function resLoad(e) {
     $("#music-name").html(music[e]);
-    var s="http://madeai.cn/wp-content/uploads/2017/12/"+music[e]+"-mp3-image-150x150.jpg";
+    var s="images/covers/"+music[e]+"-mp3-image-150x150.jpg";
     $("#cover").attr("src",s);
     $("#cover-bg,body").css("background-image","url("+s+")");
     $("#music-audio").attr("src","http://madeai.cn/wp-content/uploads/2017/12/"+music[e]+".mp3");
@@ -54,7 +53,6 @@ $("#btn-right").click(function () {
     resLoad(i);
     audioPlay();
 });
-
 $("#music-audio").get(0).addEventListener("timeupdate",function () {
     var scale=this.currentTime/this.duration;
     var allWidth=$("#progress").width()-$("#point").width();
@@ -62,7 +60,6 @@ $("#music-audio").get(0).addEventListener("timeupdate",function () {
     $("#point").css("transform","translate("+leftWidth+"px,-3px)");
     $("#point-left").css("width",+leftWidth+"px");
 });
-
 $("#point").get(0).addEventListener("touchstart",function (e) {
    var x=e.changedTouches[0].pageX-$(this).offset().left;
    document.addEventListener("touchmove",function (e) {
@@ -77,6 +74,7 @@ $("#point").get(0).addEventListener("touchstart",function (e) {
        $("#point-left").css("width",+_left+"px");
        var scale=_left/($("#progress").width()-$("#point").width());
        $("#music-audio").get(0).currentTime=scale*$("#music-audio").get(0).duration;
+       return false;
    });
    return false;
 });
