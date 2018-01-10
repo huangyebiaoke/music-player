@@ -34,7 +34,7 @@ function resLoad(e) {
     var s = "images/covers/" + music[e] + "-mp3-image-150x150.jpg";
     $("#cover").attr("src", s);
     $("#cover-bg,body").css("background-image", "url(" + s + ")");
-    $("#music-audio").attr("src", "http://madeai.cn/wp-content/uploads/2017/12/" + music[e] + ".mp3");
+    $("#music-audio").attr("src", "http://madeai.cn/music-player/music/" + music[e] + ".mp3");
 }
 
 $("#btn-medium").click(function () {
