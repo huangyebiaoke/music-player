@@ -32,7 +32,7 @@ function audioPlay() {
     $("#btn-medium-another").show();
     $("#music-name").html(music_name[i]);
     $("#cover").attr("src", music_cover[i]+"?param=260y260");
-    $("#cover-bg,body").css("background-image", "url(" + music_cover[i]+"?param=260y260" + ")");
+    $("#cover-bg").css("background-image", "url(" + music_cover[i]+"?param=260y260" + ")");
 }
 
 function audioPuase() {
