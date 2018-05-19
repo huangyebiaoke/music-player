@@ -5,36 +5,42 @@ if (navigator.userAgent.toLowerCase().match(/android/i) == "android" || navigato
     alert("不对iphone做适配，抱歉！");
 }
 
+var music = new Array();
+var music_name = new Array();
+var music_cover = new Array();
+$.getJSON("./js/playlist.json", "", function (data) {//each循环 使用$.each方法遍历返回的数据date
+    $.each(data["result"].tracks, function (i, item) {
+        music[i] = item.id;
+        music_name[i]=item.name+"--"+item.artists[0].name;
+        music_cover[i]=item.album.picUrl;
+    });
+});
+
+/*function resLoad(e) {
+    $("#music-name").html(music_name[e]);
+    $("#cover").attr("src", music_cover[e]+"?param=260y260");
+    $("#cover-bg,body").css("background-image", "url(" + music_cover[e] + ")");
+    $("#music-audio").attr("src", "https://music.163.com/song/media/outer/url?id=" + music[e] + ".mp3");
+}*/
+
+function audioPlay() {
+    $("#music-audio").attr("src", "https://music.163.com/song/media/outer/url?id=" + music[i] + ".mp3");
+    $("#music-audio").get(0).play();
+    $("#music-warp").css("animation-play-state", "running");
+    $("#player-needle").css("animation-name", "music-needle-rot");
+    $("#btn-medium").hide();
+    $("#btn-medium-another").show();
+    $("#music-name").html(music_name[i]);
+    $("#cover").attr("src", music_cover[i]+"?param=260y260");
+    $("#cover-bg,body").css("background-image", "url(" + music_cover[i]+"?param=260y260" + ")");
+}
+
 function audioPuase() {
     $("#music-audio").get(0).pause();
     $("#music-warp").css("animation-play-state", "paused");
     $("#player-needle").css("animation-name", "music-needle-rot-another");
     $("#btn-medium-another").hide();
     $("#btn-medium").show();
-}
-
-function audioPlay() {
-    $("#music-audio").get(0).play();
-    $("#music-warp").css("animation-play-state", "running");
-    $("#player-needle").css("animation-name", "music-needle-rot");
-    $("#btn-medium").hide();
-    $("#btn-medium-another").show();
-    $("#music-name").html(music[i]);
-}
-
-var music = new Array();
-$.getJSON("./js/data.json", "", function (data) {//each循环 使用$.each方法遍历返回的数据date
-    $.each(data.music, function (i, item) {
-        music[i] = item;
-    });
-});
-
-function resLoad(e) {
-    $("#music-name").html(music[e]);
-    var s = "images/covers/" + music[e] + "-mp3-image-150x150.jpg";
-    $("#cover").attr("src", s);
-    $("#cover-bg,body").css("background-image", "url(" + s + ")");
-    $("#music-audio").attr("src", "http://madeai.cn/music-player/music/" + music[e] + ".mp3");
 }
 
 $("#btn-medium").click(function () {
@@ -51,7 +57,7 @@ $("#btn-left").click(function () {
         alert("sorry! there's no music.");
         i++;
     }
-    resLoad(i);
+    // resLoad(i);
     audioPlay();
 });
 $("#btn-right").click(function () {
@@ -61,7 +67,7 @@ $("#btn-right").click(function () {
         alert("sorry! there's no music.");
         i--;
     }
-    resLoad(i);
+    // resLoad(i);
     audioPlay();
 });
 $("#music-audio").get(0).addEventListener("timeupdate", function () {
