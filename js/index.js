@@ -16,23 +16,20 @@ $.getJSON("./js/playlist.json", "", function (data) {//each循环 使用$.each�
     });
 });
 
-/*function resLoad(e) {
-    $("#music-name").html(music_name[e]);
+function resLoad(e) {
+    // $("#music-name").html(music_name[e]);
     $("#cover").attr("src", music_cover[e]+"?param=260y260");
-    $("#cover-bg,body").css("background-image", "url(" + music_cover[e] + ")");
+    $("#cover-bg").css("background-image", "url(" + music_cover[e] + ")");
     $("#music-audio").attr("src", "https://music.163.com/song/media/outer/url?id=" + music[e] + ".mp3");
-}*/
+}
 
 function audioPlay() {
-    $("#music-audio").attr("src", "https://music.163.com/song/media/outer/url?id=" + music[i] + ".mp3");
     $("#music-audio").get(0).play();
     $("#music-warp").css("animation-play-state", "running");
     $("#player-needle").css("animation-name", "music-needle-rot");
     $("#btn-medium").hide();
     $("#btn-medium-another").show();
     $("#music-name").html(music_name[i]);
-    $("#cover").attr("src", music_cover[i]+"?param=260y260");
-    $("#cover-bg").css("background-image", "url(" + music_cover[i]+"?param=260y260" + ")");
 }
 
 function audioPuase() {
@@ -46,6 +43,7 @@ function audioPuase() {
 $("#btn-medium").click(function () {
     audioPlay();
 });
+
 $("#btn-medium-another").click(function () {
     audioPuase();
 });
@@ -57,7 +55,7 @@ $("#btn-left").click(function () {
         alert("sorry! there's no music.");
         i++;
     }
-    // resLoad(i);
+    resLoad(i);
     audioPlay();
 });
 $("#btn-right").click(function () {
@@ -67,7 +65,7 @@ $("#btn-right").click(function () {
         alert("sorry! there's no music.");
         i--;
     }
-    // resLoad(i);
+    resLoad(i);
     audioPlay();
 });
 $("#music-audio").get(0).addEventListener("timeupdate", function () {
