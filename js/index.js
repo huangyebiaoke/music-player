@@ -8,19 +8,19 @@ if (navigator.userAgent.toLowerCase().match(/android/i) == "android" || navigato
 var music = new Array();
 var music_name = new Array();
 var music_cover = new Array();
-$.getJSON("./js/playlist.json", "", function (data) {//each循环 使用$.each方法遍历返回的数据date
-    $.each(data["result"].tracks, function (i, item) {
-        music[i] = item.id;
-        music_name[i]=item.name+"--"+item.artists[0].name;
-        music_cover[i]=item.album.picUrl;
+$.getJSON("https://api.i-meto.com/meting/api?server=netease&type=playlist&id=573623248", "", function (data) {//each循环 使用$.each方法遍历返回的数据date
+    $.each(data["result"], function (i, item) {
+        music[i] = item.url;
+        music_name[i]=item.name+"--"+item.artist;
+        music_cover[i]=item.cover;
     });
 });
 
 function resLoad(e) {
     // $("#music-name").html(music_name[e]);
-    $("#cover").attr("src", music_cover[e]+"?param=260y260");
+    $("#cover").attr("src", music_cover[e]);
     $("#cover-bg").css("background-image", "url(" + music_cover[e] + ")");
-    $("#music-audio").attr("src", "https://music.163.com/song/media/outer/url?id=" + music[e] + ".mp3");
+    $("#music-audio").attr("src", music[e]);
 }
 
 function audioPlay() {
