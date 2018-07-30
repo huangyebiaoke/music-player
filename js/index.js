@@ -9,7 +9,7 @@ var music = new Array();
 var music_name = new Array();
 var music_cover = new Array();
 $.getJSON("https://api.i-meto.com/meting/api?server=netease&type=playlist&id=573623248", "", function (data) {//each循环 使用$.each方法遍历返回的数据date
-    $.each(data["result"], function (i, item) {
+    $.each(data, function (i, item) {
         music[i] = item.url;
         music_name[i]=item.name+"--"+item.artist;
         music_cover[i]=item.cover;
