@@ -8,11 +8,13 @@ if (navigator.userAgent.toLowerCase().match(/android/i) == "android" || navigato
 var music = new Array();
 var music_name = new Array();
 var music_cover = new Array();
+var music_lyric = new Array();
 $.getJSON("https://api.i-meto.com/meting/api?server=netease&type=playlist&id=573623248", "", function (data) {//each循环 使用$.each方法遍历返回的数据date
     $.each(data, function (i, item) {
         music[i] = item.url;
-        music_name[i]=item.name+"--"+item.artist;
-        music_cover[i]=item.cover;
+        music_name[i]=item.title+"--"+item.author;
+        music_cover[i]=item.pic;
+        music_lyric[i]=item.lrc;
     });
 });
 
@@ -29,7 +31,8 @@ function audioPlay() {
     $("#player-needle").css("animation-name", "music-needle-rot");
     $("#btn-medium").hide();
     $("#btn-medium-another").show();
-    $("#music-name").html(music_name[i]);
+    // $("#music-name").html(music_name[i]);
+
 }
 
 function audioPuase() {
@@ -39,8 +42,37 @@ function audioPuase() {
     $("#btn-medium-another").hide();
     $("#btn-medium").show();
 }
+/*lyric begin*/
 
+parseLyric($.ajax({url:music_lyric[0],async:false}).responseText);
+
+function parseLyric(text) {
+    var lyric = text.split('\r\n'); //先按行分割
+    var _l = lyric.length; //获取歌词行数
+    var lrc = new Array(); //新建一个数组存放最后结果
+    for (i = 0; i < _l; i++) {
+        var d = lyric[i].match(/\[\d{2}:\d{2}((\.|\:)\d{2})\]/g);  //正则匹配播放时间
+        var t = lyric[i].split(d); //以时间为分割点分割每行歌词，数组最后一个为歌词正文
+        if (d != null) { //过滤掉空行等非歌词正文部分
+            //换算时间，保留两位小数
+            var dt = String(d).split(':'); //不知道为什么一定要转换时间为字符串之后才能split，难道之前正则获取的时间已经不是字符串了么？
+            var _t = Math.round(parseInt(dt[0].split('[')[1]) * 60 + parseFloat(dt[1].split(']')[0]) * 100) / 100; //这一步我自己都觉得甚是坑爹啊！
+            lrc.push([_t, t[1]]);
+        }
+        // return lrc;
+    }
+
+    $("#music-audio")[0].ontimeupdate = function () {
+        if (this.currentTime > lrc[1][0]) {
+            console.log(lrc[1][1]);
+            lrc.shift();
+        }
+    };
+
+/*lyric end*/
 $("#btn-medium").click(function () {
+    if(i==0)
+        resLoad(i);
     audioPlay();
 });
 
